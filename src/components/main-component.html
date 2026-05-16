@@ -1,0 +1,13 @@
+<button type="button" class="add">追加</button>
+<slot name="items"></slot>
+<script defer>
+components_init("main-component", function(element, signal){
+  element.shadowRoot.addEventListener('click', e => {
+    if (e.target.closest('.add')) {
+      const item = document.createElement("form-item");
+      item.setAttribute('slot', 'items');
+      element.append(item);
+    }
+  }, { signal });
+});
+</script>

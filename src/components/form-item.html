@@ -1,0 +1,27 @@
+<style>
+:host{
+  display: block;
+  margin-block: .25rem;
+}
+.container{
+  display: inline-flex;
+  flex-direction: row;
+  gap: .25rem;
+  padding-inline: 1rem;
+  padding-block: .5rem;
+  background: lightgreen;
+  border-radius: .5rem;
+}
+</style>
+<div class="container">
+  <input type="text" /><button type="button" class="delete">削除</button>
+</div>
+<script defer>
+components_init("form-item", function(element, signal){
+  element.shadowRoot.addEventListener('click', e => {
+    if (e.target.closest('.delete')) {
+      element.remove();
+    }
+  }, { signal });
+});
+</script>
