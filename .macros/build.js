@@ -11,15 +11,15 @@ for (const componentFile of files) {
   if (!componentFile.startsWith('/src/components/') || !componentFile.endsWith('.html')) {
     continue;
   }
-  const tagName = componentFile.slice(16, -5);
-  Editor.log(`${tagName}を読込中`);
+  const tagName = componentFile.slice(16, -5).toLowerCase();
+  Editor.log(`\x1B[33m/${tagName}\x1B[0mを読込中`);
   const component = await getHTML(componentFile);
-  const matches = Array.from(component.matchAll(scriptPattern), i => "{\n" + i.at(1).trim() + "\n}");
+  const matches = Array.from(component.matchAll(scriptPattern), i => "{\n" + i.at(1).replaceAll('<%TAG_NAME%>', `'${tagName}'`).trim() + "\n}");
   componentsHTML.push(`<template id="${tagName}">` + "\n" + component.replaceAll(scriptPattern, '').trim() + "\n</template>\n");
   appJS.push(...matches);
 }
-Editor.log("app.jsを書込中");
+Editor.log("\x1B[33m/app.js\x1B[0mを書込中");
 Editor.filePutContents('/dist/app.js', appJS.join("\n"));
-Editor.log("index.htmlを書込中");
+Editor.log("\x1B[33m/index.html\x1B[0mを書込中");
 Editor.filePutContents('/dist/index.html', index.replace('<%APP_JS%>', `<script src="app.js?version=${Editor.env.VERSION}"></script>`).replace('<%COMPONENTS%>', componentsHTML.join("") + '<script src="components_init.js"></script>'));
 Editor.info("ビルド完了");
