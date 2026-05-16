@@ -17,7 +17,7 @@
   <input type="text" /><button type="button" class="delete">削除</button>
 </div>
 <script defer>
-components_init("form-item", function(element, signal){
+components_init(<%TAG_NAME%>, function(element, signal){
   element.shadowRoot.addEventListener('click', e => {
     if (e.target.closest('.delete')) {
       element.remove();

@@ -1,7 +1,12 @@
+<style>
+:host{
+  display: block;
+}
+</style>
 <button type="button" class="add">追加</button>
 <slot name="items"></slot>
 <script defer>
-components_init("main-component", function(element, signal){
+components_init(<%TAG_NAME%>, function(element, signal){
   element.shadowRoot.addEventListener('click', e => {
     if (e.target.closest('.add')) {
       const item = document.createElement("form-item");
