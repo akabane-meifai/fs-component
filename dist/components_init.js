@@ -1,4 +1,5 @@
 {
+const g = {};
 const t = Object.fromEntries(Array.from(
   document.body.querySelectorAll('template[id*="-"]'),
   i => {
@@ -21,7 +22,7 @@ for (const n in t) customElements.define(
     connectedCallback() {
       const {m, i} = t[this.tagName.toLowerCase()], a = new AbortController();
       if (typeof i === 'function') {
-        i(this, a.signal);
+        i(this, a.signal, g);
       }
       m.set(this, a);
     }
@@ -34,6 +35,7 @@ for (const n in t) customElements.define(
     }
   }
 );
+self.components_share = function() { return g; }
 self.components_init = function(k, i){
   if (!(k in t) || (typeof i !== 'function')) {
     return;
@@ -41,7 +43,7 @@ self.components_init = function(k, i){
   const x = t[k];
   for (const e of x.m.entries()) {
     const [j, a] = e;
-    i(j, a.signal);
+    i(j, a.signal, g);
   }
   x.i = i;
 };
